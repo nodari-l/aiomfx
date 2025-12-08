@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 
 #include "processors/scales_n_chords/Scale.h"
+#include "processors/velocity/Velocity.h"
 
 //==============================================================================
 /**
@@ -60,6 +61,7 @@ public:
     int getCurrentNoteNumber();
     void setScale(aiomfx::Scale &scale);
     aiomfx::Scale scale;
+    aiomfx::Velocity velocity;
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AiomFXAudioProcessor);

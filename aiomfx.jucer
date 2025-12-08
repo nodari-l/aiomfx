@@ -17,6 +17,8 @@
           <FILE id="dmF2vF" name="Scale.cpp" compile="1" resource="0" file="Source/processors/scales_n_chords/Scale.cpp"/>
           <FILE id="Nalsav" name="Scale.h" compile="0" resource="0" file="Source/processors/scales_n_chords/Scale.h"/>
         </GROUP>
+        <FILE id="NkG4KQ" name="Velocity.cpp" compile="1" resource="0" file="Source/processors/velocity/Velocity.cpp"/>
+        <FILE id="o8I9U4" name="Velocity.h" compile="0" resource="0" file="Source/processors/velocity/Velocity.h"/>
       </GROUP>
       <FILE id="txOu3a" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
@@ -34,6 +36,8 @@
     <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
             useGlobalPath="1"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors_headless" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
@@ -64,6 +68,7 @@
         <MODULEPATH id="juce_graphics" path="../../../../opt/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../../../opt/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../../../opt/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="../../Downloads/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>

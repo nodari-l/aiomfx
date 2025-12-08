@@ -132,26 +132,29 @@ bool AiomFXAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) c
 void AiomFXAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     buffer.clear();
-    
-    juce::MidiBuffer newBuffer;    
-    bool swapBuffers = false;
-    for (const juce::MidiMessageMetadata metadata : midiMessages) {
-        auto msg = metadata.getMessage();
-        if (scale.getIsActive()) {
-            scale.process(metadata, newBuffer);
-            swapBuffers = true;
-            
-            if (msg.isNoteOn()) {
+
+    // --- Stage 1: Scale Processing ---
+    if (scale.getIsActive())
+    {
+        juce::MidiBuffer tempBuffer;
+        for (const auto metadata : midiMessages)
+        {
+            auto msg = metadata.getMessage();
+            scale.process(metadata, tempBuffer); // Process from midiMessages into tempBuffer
+
+            if (msg.isNoteOn())
                 setCurrentNoteNumber(msg.getNoteNumber());
-            } else {
+            else if (msg.isNoteOff() && msg.getNoteNumber() == getCurrentNoteNumber())
                 setCurrentNoteNumber(-1);
-            }
         }
-        
-        
+        midiMessages.swapWith(tempBuffer); // Apply the changes by swapping
     }
-    if (swapBuffers)
-        midiMessages.swapWith(newBuffer);
+
+    // --- Stage 2: Velocity Processing ---
+    if (velocity.getIsActive())
+    {
+        velocity.process(midiMessages); // Process the resulting buffer in-place
+    }
 }
 
 //==============================================================================

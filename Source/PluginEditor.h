@@ -44,7 +44,7 @@ private:
     
     // Min width and heigt of the plugin
     int minWidth = 600;
-    int minHeight = 200;
+    int minHeight = 320;
     int maxWidth = 800;
     int maxHeight = 700;
     
@@ -73,6 +73,17 @@ private:
     juce::Label scaleSectionInversionSliderVal1;
     juce::Label scaleSectionInversionSliderVal2;
     juce::Label scaleSectionInversionSliderVal3;
+    
+    // Velocity section UI controls
+    juce::Label velocitySectionLabel;
+    juce::ToggleButton velocitySectionBypassBtn;
+    juce::Slider velocitySectionMinSlider = juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag,
+                                                         juce::Slider::TextEntryBoxPosition::TextBoxBelow);
+    juce::Slider velocitySectionMaxSlider = juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag,
+                                                         juce::Slider::TextEntryBoxPosition::TextBoxBelow);
+    juce::Label velocitySectionMinSliderLabel;
+    juce::Label velocitySectionMaxSliderLabel;
+    juce::Rectangle<int> velocitySectionHeaderBorder;
     
     juce::Rectangle<int> scaleSectionHeaderBorder;
     juce::Rectangle<int> scaleSectionPianoTopBorder;

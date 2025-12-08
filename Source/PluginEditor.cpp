@@ -45,6 +45,14 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     addAndMakeVisible(scaleSectionInversionSliderVal1);
     addAndMakeVisible(scaleSectionInversionSliderVal2);
     addAndMakeVisible(scaleSectionInversionSliderVal3);
+    
+    // Velocity section UI components
+    addAndMakeVisible(velocitySectionLabel);
+    addAndMakeVisible(velocitySectionBypassBtn);
+    addAndMakeVisible(velocitySectionMinSlider);
+    addAndMakeVisible(velocitySectionMaxSlider);
+    addAndMakeVisible(velocitySectionMinSliderLabel);
+    addAndMakeVisible(velocitySectionMaxSliderLabel);
 
     scaleSectionLabel.setFont (juce::Font (18.0f, juce::Font::bold));
     scaleSectionLabel.setText("Scales & Chords", juce::dontSendNotification);
@@ -149,6 +157,48 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     scaleSectionInversionSlider.setColour(juce::Slider::textBoxTextColourId , TEXT_COLOR);
     scaleSectionInversionSlider.setColour(juce::Slider::textBoxOutlineColourId, PLUGIN_BACKGROUND_COLOR);
     
+    // VELOCITY SECTION SETUP
+    velocitySectionLabel.setFont (juce::Font (18.0f, juce::Font::bold));
+    velocitySectionLabel.setText("Velocity", juce::dontSendNotification);
+    velocitySectionLabel.setColour(juce::Label::textColourId, juce::Colours::black);
+    
+    velocitySectionBypassBtn.setTitle("Velocity");
+    velocitySectionBypassBtn.setButtonText("Velocity");
+    velocitySectionBypassBtn.setColour(juce::ToggleButton::textColourId, juce::Colours::black);
+    velocitySectionBypassBtn.addListener(this);
+    velocitySectionBypassBtn.setToggleable(true);
+    velocitySectionBypassBtn.setToggleState(true, juce::dontSendNotification);
+    
+    // MIN VELOCITY SLIDER
+    juce::NormalisableRange<double> velocityMinRange (1.0, 127.0, 1.0, true); // MIDI velocity range
+    velocitySectionMinSlider.setNormalisableRange (velocityMinRange);
+    velocitySectionMinSlider.setValue(64.0); // Default min value
+    velocitySectionMinSlider.setDoubleClickReturnValue(true, 64.0);
+    velocitySectionMinSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    velocitySectionMinSlider.addListener(this);
+    velocitySectionMinSlider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(239, 146, 35));
+    velocitySectionMinSlider.setColour(juce::Slider::thumbColourId, juce::Colour(239, 146, 35));
+    velocitySectionMinSlider.setColour(juce::Slider::textBoxTextColourId , TEXT_COLOR);
+    velocitySectionMinSlider.setColour(juce::Slider::textBoxOutlineColourId, PLUGIN_BACKGROUND_COLOR);
+    
+    velocitySectionMinSliderLabel.setText("Min", juce::dontSendNotification);
+    velocitySectionMinSliderLabel.setColour(juce::Label::textColourId, juce::Colours::black);
+    
+    // MAX VELOCITY SLIDER  
+    juce::NormalisableRange<double> velocityMaxRange (1.0, 127.0, 1.0, true); // MIDI velocity range
+    velocitySectionMaxSlider.setNormalisableRange (velocityMaxRange);
+    velocitySectionMaxSlider.setValue(100.0); // Default max value
+    velocitySectionMaxSlider.setDoubleClickReturnValue(true, 100.0);
+    velocitySectionMaxSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    velocitySectionMaxSlider.addListener(this);
+    velocitySectionMaxSlider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(239, 146, 35));
+    velocitySectionMaxSlider.setColour(juce::Slider::thumbColourId, juce::Colour(239, 146, 35));
+    velocitySectionMaxSlider.setColour(juce::Slider::textBoxTextColourId , TEXT_COLOR);
+    velocitySectionMaxSlider.setColour(juce::Slider::textBoxOutlineColourId, PLUGIN_BACKGROUND_COLOR);
+    
+    velocitySectionMaxSliderLabel.setText("Max", juce::dontSendNotification);
+    velocitySectionMaxSliderLabel.setColour(juce::Label::textColourId, juce::Colours::black);
+    
     drawScaleSectionPiano(10, 100);
 
     itor[1] = keyC;
@@ -182,6 +232,7 @@ void AiomFXAudioProcessorEditor::paint (juce::Graphics& g)
     
     g.setColour(scaleSectionPianoBorderColour);
     g.fillRect(scaleSectionHeaderBorder);
+    g.fillRect(velocitySectionHeaderBorder);
     g.fillRect(scaleSectionPianoTopBorder);
     g.fillRect(scaleSectionPianoBottomBorder);
     g.fillRect(scaleSectionPianoLeftBorder);
@@ -255,6 +306,18 @@ void AiomFXAudioProcessorEditor::resized() {
     
     scaleSectionOctUpBtn.setBounds(430, 70, 100, 50);
     scaleSectionOctDownBtn.setBounds(430, 120, 100, 20);
+    
+    velocitySectionHeaderBorder = juce::Rectangle<int>(0, 185, getWidth(), 2);
+    
+    // VELOCITY SECTION LAYOUT - positioned below piano
+    velocitySectionLabel.setBounds(10, 190, 200, 20);
+    velocitySectionBypassBtn.setBounds(230, 190, 100, 30);
+    
+    velocitySectionMinSlider.setBounds(10, 220, 70, 70);
+    velocitySectionMinSliderLabel.setBounds(25, 295, 40, 15);
+    
+    velocitySectionMaxSlider.setBounds(100, 220, 70, 70);  
+    velocitySectionMaxSliderLabel.setBounds(115, 295, 40, 15);
 }
 
 void AiomFXAudioProcessorEditor::comboBoxChanged(juce::ComboBox *box) {
@@ -277,6 +340,8 @@ void AiomFXAudioProcessorEditor::buttonClicked(juce::Button *btn) {
         audioProcessor.scale.setIsActive(!isToggled);
     } else if (btn == &scaleSectionChordsAreOnBtn) {
         audioProcessor.scale.setChordsAreOn(isToggled);
+    } else if (btn == &velocitySectionBypassBtn) {
+        audioProcessor.velocity.setIsActive(isToggled);
     }
 }
 
@@ -343,5 +408,9 @@ void AiomFXAudioProcessorEditor::sliderValueChanged(juce::Slider *slider) {
         audioProcessor.scale.setNumOfNotesInChords((int)slider->getValue());
     } else if(slider == &scaleSectionInversionSlider) {
         audioProcessor.scale.setInversion((int)slider->getValue());
+    } else if (slider == &velocitySectionMinSlider) {
+        audioProcessor.velocity.setMinVal((int)slider->getValue());
+    } else if (slider == &velocitySectionMaxSlider) {
+        audioProcessor.velocity.setMaxVal((int)slider->getValue());
     }
 }
