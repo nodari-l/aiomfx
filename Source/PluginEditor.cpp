@@ -173,6 +173,7 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     juce::NormalisableRange<double> velocityMinRange (1.0, 127.0, 1.0, true); // MIDI velocity range
     velocitySectionMinSlider.setNormalisableRange (velocityMinRange);
     velocitySectionMinSlider.setValue(64.0); // Default min value
+    audioProcessor.velocity.setMinVal(64);
     velocitySectionMinSlider.setDoubleClickReturnValue(true, 64.0);
     velocitySectionMinSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 20);
     velocitySectionMinSlider.setTextBoxIsEditable(false);
@@ -190,6 +191,7 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     juce::NormalisableRange<double> velocityMaxRange (1.0, 127.0, 1.0, true); // MIDI velocity range
     velocitySectionMaxSlider.setNormalisableRange (velocityMaxRange);
     velocitySectionMaxSlider.setValue(100.0); // Default max value
+    audioProcessor.velocity.setMaxVal(100);
     velocitySectionMaxSlider.setDoubleClickReturnValue(true, 100.0);
     velocitySectionMaxSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 20);
     velocitySectionMaxSlider.setTextBoxIsEditable(false);

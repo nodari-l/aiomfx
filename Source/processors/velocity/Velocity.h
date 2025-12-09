@@ -6,7 +6,7 @@ namespace aiomfx {
 
 class Velocity {
     bool isActive = true;
-    int minVal = 20;
+    int minVal = 64;
     int maxVal = 100;
     
     juce::Random random;
