@@ -110,13 +110,13 @@ private:
     
     // Colors
     std::map<std::string, juce::Colour> notesColours{
-        {"naturalNotActive", juce::Colour(199, 214, 201)},
-        {"naturalActive", juce::Colour(146, 176, 149)},
-        {"sharpNotActive", juce::Colour (134, 146, 136)},
-        {"sharpActive", juce::Colour(88, 141, 97)},
+        {"naturalNotActive", juce::Colour(229, 214, 212)},
+        {"naturalActive", juce::Colour(198, 176, 171)},
+        {"sharpNotActive", juce::Colour (158, 143, 137)},
+        {"sharpActive", juce::Colour(107, 91, 85)},
     };
     
-    juce::Colour scaleSectionPianoBorderColour = juce::Colour(100, 90, 85);
+    juce::Colour scaleSectionPianoBorderColour = juce::Colour(229, 214, 212);
     
     juce::Colour backgroundColour = juce::Colour(255, 249, 245);
 //    juce::Colour backgroundColour = juce::Colour(86, 100, 139);

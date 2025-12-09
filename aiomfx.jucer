@@ -6,6 +6,8 @@
               pluginManufacturer="aiomfx" aaxIdentifier="org.aiomfx.aiomfx">
   <MAINGROUP id="jmBNh1" name="aiomfx">
     <GROUP id="{4339D60C-DF74-C91A-68BD-1AE8B1EB7A23}" name="Source">
+      <FILE id="kEfRVS" name="MinimalistRotaryLookAndFeel.h" compile="0"
+            resource="0" file="Source/MinimalistRotaryLookAndFeel.h"/>
       <FILE id="C4QPKl" name="LookAndFeel.cpp" compile="1" resource="0" file="Source/LookAndFeel.cpp"/>
       <FILE id="lzZtZe" name="LookAndFeel.h" compile="0" resource="0" file="Source/LookAndFeel.h"/>
       <GROUP id="{9F0458F3-D8E3-95A6-7B7B-D84F8BA3619A}" name="processors">

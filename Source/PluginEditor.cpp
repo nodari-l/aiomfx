@@ -159,11 +159,11 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     
     // VELOCITY SECTION SETUP
     velocitySectionLabel.setFont (juce::Font (18.0f, juce::Font::bold));
-    velocitySectionLabel.setText("Velocity", juce::dontSendNotification);
+    velocitySectionLabel.setText("Humanize", juce::dontSendNotification);
     velocitySectionLabel.setColour(juce::Label::textColourId, juce::Colours::black);
     
-    velocitySectionBypassBtn.setTitle("Velocity");
-    velocitySectionBypassBtn.setButtonText("Velocity");
+    velocitySectionBypassBtn.setTitle("Bypass");
+    velocitySectionBypassBtn.setButtonText("Bypass");
     velocitySectionBypassBtn.setColour(juce::ToggleButton::textColourId, juce::Colours::black);
     velocitySectionBypassBtn.addListener(this);
     velocitySectionBypassBtn.setToggleable(true);
@@ -174,30 +174,34 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     velocitySectionMinSlider.setNormalisableRange (velocityMinRange);
     velocitySectionMinSlider.setValue(64.0); // Default min value
     velocitySectionMinSlider.setDoubleClickReturnValue(true, 64.0);
-    velocitySectionMinSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    velocitySectionMinSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 20);
+    velocitySectionMinSlider.setTextBoxIsEditable(false);
     velocitySectionMinSlider.addListener(this);
     velocitySectionMinSlider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(239, 146, 35));
     velocitySectionMinSlider.setColour(juce::Slider::thumbColourId, juce::Colour(239, 146, 35));
-    velocitySectionMinSlider.setColour(juce::Slider::textBoxTextColourId , TEXT_COLOR);
-    velocitySectionMinSlider.setColour(juce::Slider::textBoxOutlineColourId, PLUGIN_BACKGROUND_COLOR);
+    velocitySectionMinSlider.setColour(juce::Slider::textBoxTextColourId , juce::Colours::black);
+    velocitySectionMinSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
     
     velocitySectionMinSliderLabel.setText("Min", juce::dontSendNotification);
     velocitySectionMinSliderLabel.setColour(juce::Label::textColourId, juce::Colours::black);
+    velocitySectionMinSliderLabel.setJustificationType(juce::Justification::centred);
     
     // MAX VELOCITY SLIDER  
     juce::NormalisableRange<double> velocityMaxRange (1.0, 127.0, 1.0, true); // MIDI velocity range
     velocitySectionMaxSlider.setNormalisableRange (velocityMaxRange);
     velocitySectionMaxSlider.setValue(100.0); // Default max value
     velocitySectionMaxSlider.setDoubleClickReturnValue(true, 100.0);
-    velocitySectionMaxSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::NoTextBox, true, 0, 0);
+    velocitySectionMaxSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 20);
+    velocitySectionMaxSlider.setTextBoxIsEditable(false);
     velocitySectionMaxSlider.addListener(this);
     velocitySectionMaxSlider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(239, 146, 35));
     velocitySectionMaxSlider.setColour(juce::Slider::thumbColourId, juce::Colour(239, 146, 35));
-    velocitySectionMaxSlider.setColour(juce::Slider::textBoxTextColourId , TEXT_COLOR);
-    velocitySectionMaxSlider.setColour(juce::Slider::textBoxOutlineColourId, PLUGIN_BACKGROUND_COLOR);
+    velocitySectionMaxSlider.setColour(juce::Slider::textBoxTextColourId , juce::Colours::black);
+    velocitySectionMaxSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
     
     velocitySectionMaxSliderLabel.setText("Max", juce::dontSendNotification);
     velocitySectionMaxSliderLabel.setColour(juce::Label::textColourId, juce::Colours::black);
+    velocitySectionMaxSliderLabel.setJustificationType(juce::Justification::centred);
     
     drawScaleSectionPiano(10, 100);
 
@@ -287,37 +291,37 @@ void AiomFXAudioProcessorEditor::resized() {
     
     scaleSectionChordsAreOnBtn.setBounds(230, 30, 100, 50);
     
-    scaleSectionNumOfNotesSliderVal2.setBounds(230, 130, 20, 20);
-    scaleSectionNumOfNotesSliderVal3.setBounds(230, 85, 20, 20);
-    scaleSectionNumOfNotesSliderVal4.setBounds(285, 85, 20, 20);
-    scaleSectionNumOfNotesSliderVal5.setBounds(285, 130, 20, 20);
+    scaleSectionNumOfNotesSliderVal2.setBounds(220, 145, 20, 20);
+    scaleSectionNumOfNotesSliderVal3.setBounds(220, 75, 20, 20);
+    scaleSectionNumOfNotesSliderVal4.setBounds(300, 75, 20, 20);
+    scaleSectionNumOfNotesSliderVal5.setBounds(300, 145, 20, 20);
     scaleSectionNumOfNotesSlider.setBounds(230, 80, 70, 70);
     scaleSectionNumOfNotesSlider.toFront(false);
     scaleSectionNumOfNotesSliderLabel.setBounds(243, 115, 50, 80);
     
-    scaleSectionInversionSliderVal0.setBounds(325, 130, 20, 20);
-    scaleSectionInversionSliderVal1.setBounds(325, 85, 20, 20);
-    scaleSectionInversionSliderVal2.setBounds(380, 85, 20, 20);
-    scaleSectionInversionSliderVal3.setBounds(380, 130, 20, 20);
-    scaleSectionInversionSlider.setBounds(325, 80, 70, 70);
+    scaleSectionInversionSliderVal0.setBounds(335, 145, 20, 20);
+    scaleSectionInversionSliderVal1.setBounds(335, 75, 20, 20);
+    scaleSectionInversionSliderVal2.setBounds(415, 75, 20, 20);
+    scaleSectionInversionSliderVal3.setBounds(415, 145, 20, 20);
+    scaleSectionInversionSlider.setBounds(345, 80, 70, 70);
     scaleSectionInversionSlider.toFront(false);
-    scaleSectionInversionSliderLabel.setBounds(329, 115, 70, 80);
+    scaleSectionInversionSliderLabel.setBounds(349, 115, 70, 80);
     
     
-    scaleSectionOctUpBtn.setBounds(430, 70, 100, 50);
-    scaleSectionOctDownBtn.setBounds(430, 120, 100, 20);
+    scaleSectionOctUpBtn.setBounds(450, 70, 100, 50);
+    scaleSectionOctDownBtn.setBounds(450, 120, 100, 20);
     
-    velocitySectionHeaderBorder = juce::Rectangle<int>(0, 185, getWidth(), 2);
+    velocitySectionHeaderBorder = juce::Rectangle<int>(0, 175, getWidth(), 2);
     
     // VELOCITY SECTION LAYOUT - positioned below piano
-    velocitySectionLabel.setBounds(10, 190, 200, 20);
-    velocitySectionBypassBtn.setBounds(230, 190, 100, 30);
+    velocitySectionLabel.setBounds(10, 180, 200, 20);
+    velocitySectionBypassBtn.setBounds(230, 180, 100, 30);
     
-    velocitySectionMinSlider.setBounds(10, 220, 70, 70);
-    velocitySectionMinSliderLabel.setBounds(25, 295, 40, 15);
+    velocitySectionMinSliderLabel.setBounds(10, 210, 70, 15);
+    velocitySectionMinSlider.setBounds(10, 225, 70, 90);
     
-    velocitySectionMaxSlider.setBounds(100, 220, 70, 70);  
-    velocitySectionMaxSliderLabel.setBounds(115, 295, 40, 15);
+    velocitySectionMaxSliderLabel.setBounds(100, 210, 70, 15);
+    velocitySectionMaxSlider.setBounds(100, 225, 70, 90);
 }
 
 void AiomFXAudioProcessorEditor::comboBoxChanged(juce::ComboBox *box) {

@@ -14,6 +14,7 @@ const juce::Colour AIOMFX_RED{255, 109, 124};
 class AiomFXLookAndFeel : public juce::LookAndFeel_V4  {
 
 public:
+    AiomFXLookAndFeel();
     void drawRotarySlider (juce::Graphics& g, int x, int y, int width, int height,
                            float sliderPos, const float rotaryStartAngle,
                            const float rotaryEndAngle, juce::Slider& slider);
@@ -26,6 +27,18 @@ public:
                                       [[maybe_unused]] const bool isEnabled,
                                       [[maybe_unused]] const bool shouldDrawButtonAsHighlighted,
                      [[maybe_unused]] const bool shouldDrawButtonAsDown);
+    
+    // In LookAndFeel.h inside class AiomFXLookAndFeel : public ...
+void drawToggleButton (juce::Graphics& g, juce::ToggleButton& button,
+                       bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
+
+    void drawComboBox (juce::Graphics& g, int width, int height, bool isButtonDown,
+                       int buttonX, int buttonY, int buttonW, int buttonH,
+                       juce::ComboBox& box) override;
+
+    void positionComboBoxText (juce::ComboBox& box, juce::Label& label) override;
+
+    void drawPopupMenuBackground (juce::Graphics& g, int width, int height) override;
     
 
    
