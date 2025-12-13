@@ -96,10 +96,11 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     scaleSectionBypassBtn.setColour(juce::ToggleButton::textColourId, juce::Colours::black);
     scaleSectionBypassBtn.addListener(this);
     scaleSectionBypassBtn.setToggleable(true);
+    scaleSectionBypassBtn.setToggleState(true, juce::dontSendNotification);
 
-    if (audioProcessor.scale.getIsActive()) {
-        scaleSectionBypassBtn.setState(juce::Button::ButtonState::buttonDown);
-    }
+//    if (audioProcessor.scale.getIsActive()) {
+//        scaleSectionBypassBtn.setState(juce::Button::ButtonState::buttonDown);
+//    }
 
     scaleSectionOctDownBtn.setTitle("Oct Down");
     scaleSectionOctDownBtn.setButtonText("Oct Down");
@@ -343,7 +344,7 @@ void AiomFXAudioProcessorEditor::buttonClicked(juce::Button *btn) {
     } else if (btn == &scaleSectionOctUpBtn) {
         audioProcessor.scale.setAddOctUp(isToggled);
     } else if (btn == &scaleSectionBypassBtn) {
-        audioProcessor.scale.setIsActive(!isToggled);
+        audioProcessor.scale.setIsActive(isToggled);
     } else if (btn == &scaleSectionChordsAreOnBtn) {
         audioProcessor.scale.setChordsAreOn(isToggled);
     } else if (btn == &velocitySectionBypassBtn) {

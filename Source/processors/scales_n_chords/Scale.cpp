@@ -33,6 +33,10 @@ Scale::Scale(std::string key, std::string name) : key(key), name(name) {
 }
 
 void Scale::buildScale(std::vector<int> &intervals, std::vector<int> &chordTypes) {
+    for (auto& note : notes) {
+        note.setInScale(false);
+    }
+    
     int noteId = keyToNoteNum[key];
     notes[noteId].setInScale(true);
     notes[noteId].setChordType(chordTypes[0]);
