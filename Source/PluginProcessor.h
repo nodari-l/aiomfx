@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <vector>
 
 #include "processors/scales_n_chords/Scale.h"
 #include "processors/velocity/Velocity.h"
@@ -57,14 +58,16 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    void setCurrentNoteNumber(int val);
-    int getCurrentNoteNumber();
+    void addCurrentNoteNumber(int noteNumber);
+    void removeCurrentNoteNumber(int noteNumber);
+    std::vector<int> getCurrentNoteNumbers();
+    bool hasActiveNotes();
     void setScale(aiomfx::Scale &scale);
     aiomfx::Scale scale;
     aiomfx::Velocity velocity;
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AiomFXAudioProcessor);
-    int currentNoteNumber = -1;
+    std::vector<int> currentNoteNumbers;
     
 };

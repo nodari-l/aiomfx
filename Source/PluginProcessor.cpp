@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include <algorithm>
 
 //==============================================================================
 AiomFXAudioProcessor::AiomFXAudioProcessor()
@@ -143,9 +144,9 @@ void AiomFXAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
             scale.process(metadata, tempBuffer); // Process from midiMessages into tempBuffer
 
             if (msg.isNoteOn())
-                setCurrentNoteNumber(msg.getNoteNumber());
-            else if (msg.isNoteOff() && msg.getNoteNumber() == getCurrentNoteNumber())
-                setCurrentNoteNumber(-1);
+                addCurrentNoteNumber(msg.getNoteNumber());
+            else if (msg.isNoteOff())
+                removeCurrentNoteNumber(msg.getNoteNumber());
         }
         midiMessages.swapWith(tempBuffer); // Apply the changes by swapping
     }
@@ -186,12 +187,22 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
 }
 
 
-void AiomFXAudioProcessor::setCurrentNoteNumber(int val) {
-    currentNoteNumber = val;
+void AiomFXAudioProcessor::addCurrentNoteNumber(int noteNumber) {
+    if (std::find(currentNoteNumbers.begin(), currentNoteNumbers.end(), noteNumber) == currentNoteNumbers.end()) {
+        currentNoteNumbers.push_back(noteNumber);
+    }
 }
 
-int AiomFXAudioProcessor::getCurrentNoteNumber() {
-    return currentNoteNumber;
+void AiomFXAudioProcessor::removeCurrentNoteNumber(int noteNumber) {
+    currentNoteNumbers.erase(std::remove(currentNoteNumbers.begin(), currentNoteNumbers.end(), noteNumber), currentNoteNumbers.end());
+}
+
+std::vector<int> AiomFXAudioProcessor::getCurrentNoteNumbers() {
+    return currentNoteNumbers;
+}
+
+bool AiomFXAudioProcessor::hasActiveNotes() {
+    return !currentNoteNumbers.empty();
 }
 
 void AiomFXAudioProcessor::setScale(aiomfx::Scale &scale) {
