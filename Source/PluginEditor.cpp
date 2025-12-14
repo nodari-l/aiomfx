@@ -255,7 +255,7 @@ void AiomFXAudioProcessorEditor::paint (juce::Graphics& g)
                 g.fillRect(itor[note.getId()]);
             }
 
-            if (note.getId() == currentNoteNumber) {
+            if (currentNoteNumbersSet.count(note.getId())) {
                 g.setColour(juce::Colours::orange);
                 g.fillRect(itor[note.getId()]);
             }
@@ -274,7 +274,7 @@ void AiomFXAudioProcessorEditor::paint (juce::Graphics& g)
                 g.fillRect(itor[note.getId()]);
             }
 
-            if (note.getId() == currentNoteNumber) {
+            if (currentNoteNumbersSet.count(note.getId())) {
                 g.setColour(juce::Colours::orange);
                 g.fillRect(itor[note.getId()]);
             }
@@ -366,9 +366,14 @@ void AiomFXAudioProcessorEditor::setUpDropdown(juce::ComboBox &dropdown, const s
 }
 
 void AiomFXAudioProcessorEditor::timerCallback() {
-    currentNoteNumber = audioProcessor.getCurrentNoteNumber();
-    if (currentNoteNumber > 0) {
-        currentNoteNumber = currentNoteNumber % 12 + 1;
+    currentNoteNumbers = audioProcessor.getCurrentNoteNumbers();
+    currentNoteNumbersSet.clear();
+    
+    if (!currentNoteNumbers.empty()) {
+        for (int noteNumber : currentNoteNumbers) {
+            int processedNote = noteNumber % 12 + 1;
+            currentNoteNumbersSet.insert(processedNote);
+        }
         repaint();
     }
 }

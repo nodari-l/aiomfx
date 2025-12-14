@@ -143,9 +143,9 @@ void AiomFXAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
             scale.process(metadata, tempBuffer); // Process from midiMessages into tempBuffer
 
             if (msg.isNoteOn())
-                setCurrentNoteNumber(msg.getNoteNumber());
-            else if (msg.isNoteOff() && msg.getNoteNumber() == getCurrentNoteNumber())
-                setCurrentNoteNumber(-1);
+                addCurrentNoteNumber(msg.getNoteNumber());
+            else if (msg.isNoteOff())
+                removeCurrentNoteNumber(msg.getNoteNumber());
         }
         midiMessages.swapWith(tempBuffer); // Apply the changes by swapping
     }
@@ -186,12 +186,47 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
 }
 
 
-void AiomFXAudioProcessor::setCurrentNoteNumber(int val) {
-    currentNoteNumber = val;
+void AiomFXAudioProcessor::addCurrentNoteNumber(int noteNumber) {
+    if (noteNumber >= 0 && noteNumber < 64) {
+        activeNotesBitfieldLow.fetch_or(1ULL << noteNumber, std::memory_order_relaxed);
+    } else if (noteNumber >= 64 && noteNumber < 128) {
+        activeNotesBitfieldHigh.fetch_or(1ULL << (noteNumber - 64), std::memory_order_relaxed);
+    }
 }
 
-int AiomFXAudioProcessor::getCurrentNoteNumber() {
-    return currentNoteNumber;
+void AiomFXAudioProcessor::removeCurrentNoteNumber(int noteNumber) {
+    if (noteNumber >= 0 && noteNumber < 64) {
+        activeNotesBitfieldLow.fetch_and(~(1ULL << noteNumber), std::memory_order_relaxed);
+    } else if (noteNumber >= 64 && noteNumber < 128) {
+        activeNotesBitfieldHigh.fetch_and(~(1ULL << (noteNumber - 64)), std::memory_order_relaxed);
+    }
+}
+
+std::vector<int> AiomFXAudioProcessor::getCurrentNoteNumbers() {
+    std::vector<int> activeNotes;
+    activeNotes.reserve(12); // Reserve space for typical use case
+    
+    std::uint64_t bitsLow = activeNotesBitfieldLow.load(std::memory_order_relaxed);
+    std::uint64_t bitsHigh = activeNotesBitfieldHigh.load(std::memory_order_relaxed);
+    
+    for (int i = 0; i < 64; ++i) {
+        if (bitsLow & (1ULL << i)) {
+            activeNotes.push_back(i);
+        }
+    }
+    
+    for (int i = 0; i < 64; ++i) {
+        if (bitsHigh & (1ULL << i)) {
+            activeNotes.push_back(i + 64);
+        }
+    }
+    
+    return activeNotes;
+}
+
+bool AiomFXAudioProcessor::hasActiveNotes() {
+    return (activeNotesBitfieldLow.load(std::memory_order_relaxed) != 0) || 
+           (activeNotesBitfieldHigh.load(std::memory_order_relaxed) != 0);
 }
 
 void AiomFXAudioProcessor::setScale(aiomfx::Scale &scale) {
