@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <unordered_set>
 #include "PluginProcessor.h"
 #include "processors/scales_n_chords/Scale.h"
 #include "LookAndFeel.h"
@@ -107,6 +108,7 @@ private:
     void setUpDropdown(juce::ComboBox &dropdown, const std::vector<std::string> &options, int selectedOption, bool addListener);
     
     std::vector<int> currentNoteNumbers;
+    std::unordered_set<int> currentNoteNumbersSet;
     
     // Colors
     std::map<std::string, juce::Colour> notesColours{

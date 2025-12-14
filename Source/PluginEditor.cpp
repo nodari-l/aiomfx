@@ -8,7 +8,6 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include <algorithm>
 
 //==============================================================================
 AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
@@ -256,7 +255,7 @@ void AiomFXAudioProcessorEditor::paint (juce::Graphics& g)
                 g.fillRect(itor[note.getId()]);
             }
 
-            if (std::find(currentNoteNumbers.begin(), currentNoteNumbers.end(), note.getId()) != currentNoteNumbers.end()) {
+            if (currentNoteNumbersSet.count(note.getId())) {
                 g.setColour(juce::Colours::orange);
                 g.fillRect(itor[note.getId()]);
             }
@@ -275,7 +274,7 @@ void AiomFXAudioProcessorEditor::paint (juce::Graphics& g)
                 g.fillRect(itor[note.getId()]);
             }
 
-            if (std::find(currentNoteNumbers.begin(), currentNoteNumbers.end(), note.getId()) != currentNoteNumbers.end()) {
+            if (currentNoteNumbersSet.count(note.getId())) {
                 g.setColour(juce::Colours::orange);
                 g.fillRect(itor[note.getId()]);
             }
@@ -368,9 +367,12 @@ void AiomFXAudioProcessorEditor::setUpDropdown(juce::ComboBox &dropdown, const s
 
 void AiomFXAudioProcessorEditor::timerCallback() {
     currentNoteNumbers = audioProcessor.getCurrentNoteNumbers();
+    currentNoteNumbersSet.clear();
+    
     if (!currentNoteNumbers.empty()) {
-        for (int& noteNumber : currentNoteNumbers) {
-            noteNumber = noteNumber % 12 + 1;
+        for (int noteNumber : currentNoteNumbers) {
+            int processedNote = noteNumber % 12 + 1;
+            currentNoteNumbersSet.insert(processedNote);
         }
         repaint();
     }

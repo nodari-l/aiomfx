@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include <vector>
+#include <atomic>
 
 #include "processors/scales_n_chords/Scale.h"
 #include "processors/velocity/Velocity.h"
@@ -68,6 +69,7 @@ public:
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AiomFXAudioProcessor);
-    std::vector<int> currentNoteNumbers;
+    std::atomic<std::uint64_t> activeNotesBitfieldLow{0};  // Notes 0-63
+    std::atomic<std::uint64_t> activeNotesBitfieldHigh{0}; // Notes 64-127
     
 };
