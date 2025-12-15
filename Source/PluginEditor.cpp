@@ -34,17 +34,9 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     addAndMakeVisible(scaleSectionChordsAreOnBtn);
     addAndMakeVisible(scaleSectionNumOfNotesSlider);
     addAndMakeVisible(scaleSectionOctUpBtn);
-    addAndMakeVisible(scaleSectionNumOfNotesSliderVal2);
-    addAndMakeVisible(scaleSectionNumOfNotesSliderVal3);
-    addAndMakeVisible(scaleSectionNumOfNotesSliderVal4);
-    addAndMakeVisible(scaleSectionNumOfNotesSliderVal5);
     addAndMakeVisible(scaleSectionNumOfNotesSliderLabel);
     addAndMakeVisible(scaleSectionInversionSlider);
     addAndMakeVisible(scaleSectionInversionSliderLabel);
-    addAndMakeVisible(scaleSectionInversionSliderVal0);
-    addAndMakeVisible(scaleSectionInversionSliderVal1);
-    addAndMakeVisible(scaleSectionInversionSliderVal2);
-    addAndMakeVisible(scaleSectionInversionSliderVal3);
     
     // Velocity section UI components
     addAndMakeVisible(velocitySectionLabel);
@@ -58,29 +50,13 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     scaleSectionLabel.setText("Scales & Chords", juce::dontSendNotification);
     scaleSectionLabel.setColour(juce::Label::textColourId, juce::Colours::black);
     
-    scaleSectionNumOfNotesSliderVal2.setText("2", juce::dontSendNotification);
-    scaleSectionNumOfNotesSliderVal2.setColour(juce::Label::textColourId, juce::Colours::black);
-    scaleSectionNumOfNotesSliderVal3.setText("3", juce::dontSendNotification);
-    scaleSectionNumOfNotesSliderVal3.setColour(juce::Label::textColourId, juce::Colours::black);
-    scaleSectionNumOfNotesSliderVal4.setText("4", juce::dontSendNotification);
-    scaleSectionNumOfNotesSliderVal4.setColour(juce::Label::textColourId, juce::Colours::black);
-    scaleSectionNumOfNotesSliderVal5.setText("5", juce::dontSendNotification);
-    scaleSectionNumOfNotesSliderVal5.setColour(juce::Label::textColourId, juce::Colours::black);
-    
     scaleSectionNumOfNotesSliderLabel.setText("Notes", juce::dontSendNotification);
     scaleSectionNumOfNotesSliderLabel.setColour(juce::Label::textColourId, juce::Colours::black);
+    scaleSectionNumOfNotesSliderLabel.setJustificationType(juce::Justification::centred);
     
     scaleSectionInversionSliderLabel.setText("Inversion", juce::dontSendNotification);
     scaleSectionInversionSliderLabel.setColour(juce::Label::textColourId, juce::Colours::black);
-    
-    scaleSectionInversionSliderVal0.setText("0", juce::dontSendNotification);
-    scaleSectionInversionSliderVal0.setColour(juce::Label::textColourId, juce::Colours::black);
-    scaleSectionInversionSliderVal1.setText("1", juce::dontSendNotification);
-    scaleSectionInversionSliderVal1.setColour(juce::Label::textColourId, juce::Colours::black);
-    scaleSectionInversionSliderVal2.setText("2", juce::dontSendNotification);
-    scaleSectionInversionSliderVal2.setColour(juce::Label::textColourId, juce::Colours::black);
-    scaleSectionInversionSliderVal3.setText("3", juce::dontSendNotification);
-    scaleSectionInversionSliderVal3.setColour(juce::Label::textColourId, juce::Colours::black);
+    scaleSectionInversionSliderLabel.setJustificationType(juce::Justification::centred);
 
     scaleSectionKeyLabel.setText("Key", juce::dontSendNotification);
     scaleSectionKeyLabel.setColour(juce::Label::textColourId, juce::Colours::black);
@@ -91,8 +67,6 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     setUpDropdown(keyDropdown, aiomfx::Note::notes, 1, true);
     setUpDropdown(scaleDropdown, aiomfx::Scale::scalesNames, 1, true);
 
-    scaleSectionBypassBtn.setTitle("Bypass");
-    scaleSectionBypassBtn.setButtonText("Bypass");
     scaleSectionBypassBtn.setColour(juce::ToggleButton::textColourId, juce::Colours::black);
     scaleSectionBypassBtn.addListener(this);
     scaleSectionBypassBtn.setToggleable(true);
@@ -124,47 +98,33 @@ AiomFXAudioProcessorEditor::AiomFXAudioProcessorEditor (AiomFXAudioProcessor& p)
     juce::NormalisableRange<double> range (2.0, 5.0, 1.0, true); // Snap to integers
     scaleSectionNumOfNotesSlider.setNormalisableRange (range);
     scaleSectionNumOfNotesSlider.setValue(3.0);
-    scaleSectionNumOfNotesSlider.setDoubleClickReturnValue(true, 0.0);
+    scaleSectionNumOfNotesSlider.setDoubleClickReturnValue(true, 3.0);
+    scaleSectionNumOfNotesSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 20);
     scaleSectionNumOfNotesSlider.setTextBoxIsEditable(false);
-    scaleSectionNumOfNotesSlider.setTextBoxStyle(
-                                                 juce::Slider::TextEntryBoxPosition::NoTextBox,
-                                                 true,
-                                                 20,
-                                                 20
-    );
     scaleSectionNumOfNotesSlider.addListener(this);
-    
     scaleSectionNumOfNotesSlider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(239, 146, 35));
     scaleSectionNumOfNotesSlider.setColour(juce::Slider::thumbColourId, juce::Colour(239, 146, 35));
-    scaleSectionNumOfNotesSlider.setColour(juce::Slider::textBoxTextColourId , TEXT_COLOR);
-    scaleSectionNumOfNotesSlider.setColour(juce::Slider::textBoxOutlineColourId, PLUGIN_BACKGROUND_COLOR);
+    scaleSectionNumOfNotesSlider.setColour(juce::Slider::textBoxTextColourId , juce::Colours::black);
+    scaleSectionNumOfNotesSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
     
     // INVERSION SLIDER
     juce::NormalisableRange<double> range2 (0.0, 3.0, 1.0, true); // Snap to integers
     scaleSectionInversionSlider.setNormalisableRange (range2);
     scaleSectionInversionSlider.setValue(0.0);
     scaleSectionInversionSlider.setDoubleClickReturnValue(true, 0.0);
+    scaleSectionInversionSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxBelow, true, 50, 20);
     scaleSectionInversionSlider.setTextBoxIsEditable(false);
-    scaleSectionInversionSlider.setTextBoxStyle(
-                                                 juce::Slider::TextEntryBoxPosition::NoTextBox,
-                                                 true,
-                                                 20,
-                                                 20
-    );
     scaleSectionInversionSlider.addListener(this);
-    
     scaleSectionInversionSlider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(239, 146, 35));
     scaleSectionInversionSlider.setColour(juce::Slider::thumbColourId, juce::Colour(239, 146, 35));
-    scaleSectionInversionSlider.setColour(juce::Slider::textBoxTextColourId , TEXT_COLOR);
-    scaleSectionInversionSlider.setColour(juce::Slider::textBoxOutlineColourId, PLUGIN_BACKGROUND_COLOR);
+    scaleSectionInversionSlider.setColour(juce::Slider::textBoxTextColourId , juce::Colours::black);
+    scaleSectionInversionSlider.setColour(juce::Slider::textBoxOutlineColourId, juce::Colours::transparentBlack);
     
     // VELOCITY SECTION SETUP
     velocitySectionLabel.setFont (juce::Font (18.0f, juce::Font::bold));
     velocitySectionLabel.setText("Humanize", juce::dontSendNotification);
     velocitySectionLabel.setColour(juce::Label::textColourId, juce::Colours::black);
     
-    velocitySectionBypassBtn.setTitle("Bypass");
-    velocitySectionBypassBtn.setButtonText("Bypass");
     velocitySectionBypassBtn.setColour(juce::ToggleButton::textColourId, juce::Colours::black);
     velocitySectionBypassBtn.addListener(this);
     velocitySectionBypassBtn.setToggleable(true);
@@ -244,6 +204,7 @@ void AiomFXAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillRect(scaleSectionPianoBottomBorder);
     g.fillRect(scaleSectionPianoLeftBorder);
     g.fillRect(scaleSectionPianoRightBorder);
+    g.fillRect(scaleSectionVerticalSeparator);
 
     for (auto note : audioProcessor.scale.getNotes()) {
         if (note.getIsNatural()) {
@@ -283,32 +244,24 @@ void AiomFXAudioProcessorEditor::paint (juce::Graphics& g)
 }
 
 void AiomFXAudioProcessorEditor::resized() {
-    scaleSectionHeaderBorder = juce::Rectangle<int>(0, 30, getWidth(), 2);
-    scaleSectionBypassBtn.setBounds(230, 0, 100, 30);
-    scaleSectionLabel.setBounds(10, 10, 200, 13);
+//    scaleSectionHeaderBorder = juce::Rectangle<int>(0, 30, getWidth(), 2);
+    scaleSectionBypassBtn.setBounds(0, 0, 100, 30);
+    scaleSectionLabel.setBounds(40, 10, 200, 13);
     
     scaleSectionKeyLabel.setBounds(10, 40, 40, 15);
     scaleSectionScaleLabel.setBounds(90, 40, 100, 15);
     keyDropdown.setBounds(10, 60, 60, 30);
     scaleDropdown.setBounds(90, 60, 100, 30);
     
-    scaleSectionChordsAreOnBtn.setBounds(230, 30, 100, 50);
+    scaleSectionVerticalSeparator = juce::Rectangle<int>(215 , 30, 2, 140);
     
-    scaleSectionNumOfNotesSliderVal2.setBounds(220, 145, 20, 20);
-    scaleSectionNumOfNotesSliderVal3.setBounds(220, 75, 20, 20);
-    scaleSectionNumOfNotesSliderVal4.setBounds(300, 75, 20, 20);
-    scaleSectionNumOfNotesSliderVal5.setBounds(300, 145, 20, 20);
-    scaleSectionNumOfNotesSlider.setBounds(230, 80, 70, 70);
-    scaleSectionNumOfNotesSlider.toFront(false);
-    scaleSectionNumOfNotesSliderLabel.setBounds(243, 115, 50, 80);
+    scaleSectionChordsAreOnBtn.setBounds(230, 20, 100, 50);
     
-    scaleSectionInversionSliderVal0.setBounds(335, 145, 20, 20);
-    scaleSectionInversionSliderVal1.setBounds(335, 75, 20, 20);
-    scaleSectionInversionSliderVal2.setBounds(415, 75, 20, 20);
-    scaleSectionInversionSliderVal3.setBounds(415, 145, 20, 20);
-    scaleSectionInversionSlider.setBounds(345, 80, 70, 70);
-    scaleSectionInversionSlider.toFront(false);
-    scaleSectionInversionSliderLabel.setBounds(349, 115, 70, 80);
+    scaleSectionNumOfNotesSliderLabel.setBounds(230, 65, 70, 15);
+    scaleSectionNumOfNotesSlider.setBounds(230, 83, 70, 90);
+    
+    scaleSectionInversionSliderLabel.setBounds(333, 65, 70, 15);
+    scaleSectionInversionSlider.setBounds(330, 83, 70, 90);
     
     
     scaleSectionOctUpBtn.setBounds(450, 70, 100, 50);
@@ -317,14 +270,14 @@ void AiomFXAudioProcessorEditor::resized() {
     velocitySectionHeaderBorder = juce::Rectangle<int>(0, 175, getWidth(), 2);
     
     // VELOCITY SECTION LAYOUT - positioned below piano
-    velocitySectionLabel.setBounds(10, 180, 200, 20);
-    velocitySectionBypassBtn.setBounds(230, 180, 100, 30);
+    velocitySectionLabel.setBounds(40, 185, 200, 20);
+    velocitySectionBypassBtn.setBounds(0, 180, 100, 30);
     
-    velocitySectionMinSliderLabel.setBounds(10, 210, 70, 15);
-    velocitySectionMinSlider.setBounds(10, 225, 70, 90);
+    velocitySectionMinSliderLabel.setBounds(30, 220, 70, 15);
+    velocitySectionMinSlider.setBounds(30, 238, 70, 90);
     
-    velocitySectionMaxSliderLabel.setBounds(100, 210, 70, 15);
-    velocitySectionMaxSlider.setBounds(100, 225, 70, 90);
+    velocitySectionMaxSliderLabel.setBounds(120, 220, 70, 15);
+    velocitySectionMaxSlider.setBounds(120, 238, 70, 90);
 }
 
 void AiomFXAudioProcessorEditor::comboBoxChanged(juce::ComboBox *box) {

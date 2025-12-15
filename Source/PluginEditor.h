@@ -45,7 +45,7 @@ private:
     
     // Min width and heigt of the plugin
     int minWidth = 600;
-    int minHeight = 320;
+    int minHeight = 340;
     int maxWidth = 800;
     int maxHeight = 700;
     
@@ -61,19 +61,10 @@ private:
     juce::Slider scaleSectionNumOfNotesSlider = juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag,
                                                              juce::Slider::TextEntryBoxPosition::TextBoxBelow);
     juce::Label scaleSectionNumOfNotesSliderLabel;
-    juce::Label scaleSectionNumOfNotesSliderVal2;
-    juce::Label scaleSectionNumOfNotesSliderVal3;
-    juce::Label scaleSectionNumOfNotesSliderVal4;
-    juce::Label scaleSectionNumOfNotesSliderVal5;
-    
     
     juce::Slider scaleSectionInversionSlider = juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag,
-                                                            juce::Slider::TextEntryBoxPosition::NoTextBox);
+                                                            juce::Slider::TextEntryBoxPosition::TextBoxBelow);
     juce::Label scaleSectionInversionSliderLabel;
-    juce::Label scaleSectionInversionSliderVal0;
-    juce::Label scaleSectionInversionSliderVal1;
-    juce::Label scaleSectionInversionSliderVal2;
-    juce::Label scaleSectionInversionSliderVal3;
     
     // Velocity section UI controls
     juce::Label velocitySectionLabel;
@@ -91,6 +82,7 @@ private:
     juce::Rectangle<int> scaleSectionPianoLeftBorder;
     juce::Rectangle<int> scaleSectionPianoRightBorder;
     juce::Rectangle<int> scaleSectionPianoBottomBorder;
+    juce::Rectangle<int> scaleSectionVerticalSeparator;
     juce::Rectangle<int> keyC;
     juce::Rectangle<int> keyDb;
     juce::Rectangle<int> keyD;
