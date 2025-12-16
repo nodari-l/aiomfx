@@ -2,7 +2,7 @@
 
 Aiomfx is a MIDI processing plugin.
 
-![screenshot](images/aiomfx.png)
+![screenshot](images/aiomfx.png | width=800)
 
 ## Table of Contents
 - [Processors](#processors)
