@@ -4,6 +4,16 @@ Aiomfx is a MIDI processing plugin.
 
 ![screenshot](images/aiomfx.png)
 
+## Table of Contents
+- [Processors](#processors)
+  - [Scales and Chords](#scales-and-chords)
+    - [Scales](#scales)
+    - [Chords](#chords)
+  - [Humanize](#humanize)
+- [System Requirements](#system-requirements)
+
+
+
 
 ## Processors
 
@@ -25,13 +35,13 @@ To enable/disable chord generation click the button left to `Chords` label. What
 
 When chords generation is acitive better to play only a single note. Be careful with playing multiple notes simultaneously because each played note will be used to generate chords and therefore it can lead to loud and unpleased sounds.
 
-#### Humanize
+### Humanize
 ![screenshot](images/humanize.png)
 
 Humanize adds randomness to the velocity of played notes. It's useful when you want to make your music sound less robotic. The amount of randomness can be controlled using Min and Max sliders. 
 
 
-## System requirements
+## System Requirements
 Any major DAW that can use VST3 or AU plugins (Ableton Live, Cubase, Logic Pro, etc). 
 
 Aiomfx currently is being tested in Ableton Live, REAPER.
